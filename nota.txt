@@ -1,0 +1,12 @@
+ensayo examen volados 
+
+doblar la apuesta cada que se pierde 
+si al seguir esta politica sucede qque la apuesta es mayor de lo que dispones apuestas todo o que tienes 
+pro el contrarip cada vez que ganes la apuesta sigue siendo de x, 
+si la cantidad inicial disponible es de 30
+x=10
+probabilidad de ganar un volado es de 0.5
+la jugada termina cuando quedas en bancarota o bine tienes 50
+¿cual es la probabilidad de que lleges a la meta?
+
+ 

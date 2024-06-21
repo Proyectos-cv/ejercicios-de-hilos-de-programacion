@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>DELEITE PIZZAS TEUL</title>
+	<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body bgcolor="carlos">
+<form name="formulario" method="POST">
+	<table border="1">
+		<thead>
+			<tr>
+				<th>INFORMACION PELICULAS</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>ID</td>
+				<td><input type="text" name="id" value="" size="20"/></td>
+			</tr>
+			<tr>
+				<td>NOMBRE</td>
+				<td><input type="text" name="nombre" value="" size="20"/></td>
+			</tr>
+			<tr>
+				<td>DESCRIPCION</td>
+				<td><input type="text" name="descripcion" value="" size="20"/></td>
+			</tr>
+			<tr>
+				<td>GENERO</td>
+				<td><input type="text" name="genero" value="" size="20"/></td>
+			</tr>
+			<tr>
+				<td>DURACION</td>
+				<td><input type="text" name="duracion" value="" size="20"/></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="GUARDAR NAME" name="guardar"/></td>
+			<td></td>
+			</tr>
+			</tbody>
+			</table>
+			</form>
+			</body>
+			</html>
+
+
+
+$idnombre = filter_imput(INPUT_POST,"idnombre");
+$nombre = filter_imput(INPUT_POST,"nombre");
+$descripcion = filter_imput(INPUT_POST,"descripcion");
+$genero = filter_imput(INPUT_POST,"genero");
+$duracion = filter_imput(INPUT_POST,"duracion");
+
+if ($idnombre!="" && $nombre!="" && $descripcion!="" && $genero!="" && $duracion!="")
+{
+   mysqli_select_db($conexion,"peliculas");
+   mysqli_query($conexion,"INSERT INTO tablapeliculas(idnombre,nombre,descripcion,genero,duracion) values('$idnombre','$nombre','$descripcion','$genero'.'$duracion')");
+   mysqli_close($conexion);
+}

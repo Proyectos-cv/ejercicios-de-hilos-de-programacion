@@ -1,0 +1,42 @@
+
+import java.io.*;
+public class criba()
+{
+public static int arre1[],arre2[];
+public void cribar()
+{
+   arre1=new int[10];
+   arre2=new int[10];
+    System.out.println(arre1);
+    System.out.println(arre2);
+
+
+}
+public void llenar()
+{
+   int num=3;
+   for(int i=0;i<=veces;i++)
+   {
+      arre1[1]=num;
+      arre[i]=num;
+      num+=2;
+   }
+}
+
+public void cribar()
+{
+   for(int i=arre[1];i<arre1.length();)
+   {
+      
+   }
+   for()
+   {
+ 
+   }
+}
+public static void main(String bolsa[]) throws Exception
+{
+criba objeto=new criba();
+objeto.cribar();
+}
+}

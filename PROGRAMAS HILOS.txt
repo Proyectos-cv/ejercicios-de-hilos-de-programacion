@@ -1,0 +1,368 @@
+public class CompletoHilos implements Runnable
+{
+  String nomhilo;
+  public static Thread hilo;
+
+  public CompletoHilos(String hilonom)
+  {
+    nomhilo=hilonom;
+    //Instanciar el hilo creado.
+    hilo=new Thread(this,nomhilo);
+    
+    System.out.println("Nuevo hilo: " + hilo);
+    hilo.start();
+  }
+
+  public void run()
+  {
+    try
+    {
+       for(int i=5;i>0;i--)
+       {
+          System.out.println(nomhilo + ":  " +i);
+          Thread.sleep(1000);
+       }
+    }
+    catch(InterruptedException exc)
+    {
+      System.out.println("Interrupcion del hilo "+nomhilo); 
+    }  
+    System.out.println("Salida del hilo: "+nomhilo);
+  }  
+
+  
+public static void main(String a[])
+{
+   //Crear 3 hilos
+   CompletoHilos obj1=new CompletoHilos("Hilo 1");   
+   CompletoHilos obj2=new CompletoHilos("Hilo 2");   
+   CompletoHilos obj3=new CompletoHilos("Hilo 3");
+   
+   //Metodo isAlive() 
+   //La sintaxis es:  Objeto.hilo.isAlive();
+   System.out.println("El hilo 1 esta vivo: " + obj1.hilo.isAlive());   
+   System.out.println("El hilo 2 esta vivo: " + obj2.hilo.isAlive());   
+   System.out.println("El hilo 3 esta vivo: " + obj3.hilo.isAlive());   
+
+   try
+   {
+     Thread.sleep(1000);
+     obj1.hilo.suspend();
+     System.out.println("Hilo 1 suspendido");
+     Thread.sleep(1000);
+     obj1.hilo.resume(); 
+     System.out.println("Reanudacion del hilo 1");
+    
+     Thread.sleep(1000);
+     obj2.hilo.suspend();
+     System.out.println("Hilo 2 suspendido");
+     Thread.sleep(1000);
+     obj2.hilo.resume(); 
+     System.out.println("Reanudacion del hilo 2");
+    
+     Thread.sleep(1000);
+     obj3.hilo.suspend();
+     System.out.println("Hilo 3 suspendido");
+     Thread.sleep(1000);
+     obj3.hilo.resume(); 
+     System.out.println("Reanudacion del hilo 3");
+   }
+   catch(InterruptedException ex)
+   {
+      System.out.println("Interrupcion del hilo principal");
+   } 
+
+
+   try
+   {
+     System.out.println("Espera la finalizacion de los hilos");
+     obj1.hilo.join();
+     obj2.hilo.join();
+     obj3.hilo.join();
+
+   }
+   catch(InterruptedException ex)
+   {
+      System.out.println("Interrupcion del hilo principal");
+   }
+   System.out.println("El hilo 1 esta vivo: " + obj1.hilo.isAlive());   
+   System.out.println("El hilo 2 esta vivo: " + obj2.hilo.isAlive());   
+   System.out.println("El hilo 3 esta vivo: " + obj3.hilo.isAlive());   
+
+   System.out.println("Salida del hilo principal");
+}
+}
+
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class HiloWait
+{
+   public static void main(String[] args)
+   {
+        // Objeto en comun, se encarga del wait y notify
+        Saludo s = new Saludo();
+       
+        Personal Empleado1 = new Personal("Pepe", s, false);
+        Personal Empleado2 = new Personal("José", s, false);
+        Personal Empleado3 = new Personal("Pedro", s, false);
+        Personal Jefe1 = new Personal("JEFE", s, true);
+
+        Empleado1.start();           
+        Empleado2.start();           
+        Empleado3.start();           
+        Jefe1.start();
+    }
+}
+
+
+
+class Personal extends Thread{
+    String nombre;
+    Saludo saludo;
+    boolean esJefe;
+   
+    public Personal(String nombre, Saludo salu, boolean esJefe){
+        this.nombre = nombre;
+        this.saludo = salu;
+        this.esJefe = esJefe;
+    }
+   
+    public void run(){
+        System.out.println(nombre + " llegó.");
+        try {
+            Thread.sleep(1000);
+            //Verifico si es personal que esta es jefe o no
+            if(esJefe){
+                saludo.saludoJefe(nombre);
+            }else{
+                saludo.saludoEmpleado(nombre);
+            }
+           
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Personal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+
+class Saludo {
+   
+    public Saludo(){       
+    }
+   
+    /* Si no es jefe, el empleado va a quedar esperando a que llegue el jefe
+    Se hace wait de el hilo que esta corriendo y se bloquea, hasta que
+    se le avise que ya puede saludar*/
+    public synchronized void saludoEmpleado(String nombre){
+        try {
+            wait();
+            System.out.println("\n"+nombre.toUpperCase() + "-: Buenos días jefe.");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Saludo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   
+    //Si es jefe, saluda y luego avisa a los empleados para que saluden
+    // El notifyAll despierta a todos los hilos que esten bloqueados
+    public synchronized void saludoJefe(String nombre){
+        System.out.println("\n****** "+nombre + "-: Buenos días empleados. ******");
+        notifyAll();
+    }    
+}
+
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+
+
+// Definimos unos sencillos threads. Se detendrán un rato
+// antes de imprimir sus nombres y retardos
+
+class TestTh extends Thread {
+    private String nombre;
+    private int retardo;
+
+    // Constructor para almacenar nuestro nombre
+    // y el retardo
+    public TestTh( String s,int d ) {
+        nombre = s;
+        retardo = d;
+        }
+
+    // El metodo run() es similar al main(), pero para
+    // threads. Cuando run() termina el thread muere
+    public void run() {
+        // Retasamos la ejecución el tiempo especificado
+        try {
+            sleep( retardo );
+        } catch( InterruptedException e ) {
+            ;
+            }
+
+        // Ahora imprimimos el nombre
+        System.out.println( "Hola! "+nombre+" "+retardo );
+        }
+    
+
+    public static void main( String args[] ) {
+        TestTh t1,t2,t3;
+
+        // Creamos los threads
+        t1 = new TestTh( "Thread 1",(int)(Math.random()*2000) );
+        t2 = new TestTh( "Thread 2",(int)(Math.random()*2000) );
+        t3 = new TestTh( "Thread 3",(int)(Math.random()*2000) );
+
+        // Arrancamos los threads
+        t1.start();
+        t2.start();
+        t3.start();
+        }
+    }
+
+
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+class ThreadDemo implements Runnable  {
+	ThreadDemo()  {
+		Thread ct = Thread.currentThread();
+		Thread t = new Thread(this, "demo Thread");
+		System.out.println("hilo actual: " + ct);
+		System.out.println("Hilo creado: " + t);
+		t.start();
+		try  {
+			Thread.sleep(3000);
+		}  catch (InterruptedException e)  {
+		   	System.out.println("Interrumpido");
+		}
+		System.out.println("!saliendo del hilo main");
+    	}
+    	public void run()  {
+		try  {
+			for (int y = 5; y > 0; y--)  {
+				System.out.println(" " + y);
+				Thread.sleep(1000);
+		 	}
+		}  catch (InterruptedException e)  {
+			System.out.println("hijo interrumpido");
+		}
+		System.out.println("saliendo del hilo hijo");
+    	}
+    	public static void main (String args [])  {
+		new ThreadDemo();
+	}
+}
+
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+
+RETO:
+1.- Se debe crear un programa con dos hilos:
+a) Hilo 1 para generar 10 números aleatorios pares.
+b) Hilo 2 para generar 10 números aletorios impares.
+
+EJEMPLOS BÁSICOS
+CON RUNNABLE
+public class ConRunnable implements Runnable
+{
+  //PRIMER PASO CREAR UN OBJETO DE TIPO CLASE
+  Thread t;
+  public static int i;
+
+  //CREAR UN CONSTRUCTOR PARA EL SEGUNDO HILO
+  public ConRunnable()
+  {
+    //CREAR SEGUNDO HILO
+    t=new Thread(this,"HIJO");
+    
+    //MOSTRAR EL HILO
+    System.out.println("ESTE ES EL HIJO "+t);
+    t.start();
+  }
+
+  //CORRER EL HILO CON SUBPROCESOS
+  public void run()
+  {
+    try
+    {
+      //AGREGAR SUBPROCESOS
+      for(i=5;i>=1;i--)
+      {
+        System.out.println("HILO HIJO "+i);
+        Thread.sleep(1000);
+      }
+    }
+    catch(InterruptedException exc)
+    {
+    }
+    System.out.println("SALIDA DEL HILO HIJO");
+  }
+
+public static void main(String a[])
+{
+    ConRunnable obj=new ConRunnable();
+    try
+    {
+      System.out.println("HILO PADRE ");
+      Thread.sleep(1000);
+    }
+    catch(InterruptedException exc)
+    {
+    }
+    System.out.println("SALIDA DEL HILO PADRE");
+}
+}
+
+CON THREAD
+public class ConThread extends Thread
+{
+  //CREAMOS UN CONSTRUCTOR
+  public static int i;
+  public ConThread()
+  {
+     //CREACION DE UN NUEVO HILO
+     System.out.println("HILO HIJO");
+     start();
+  }
+
+  public void run()
+  {
+     try
+     {
+       for(i=5;i>=1;i--)
+       { 
+        System.out.println("HILO HIJO"+i);
+        Thread.sleep(1000); 
+       }
+     }
+     catch(InterruptedException exc)
+     {
+     }
+     System.out.println("SALIDA DEL HILO HIJO");
+  }
+
+public static void main(String a[])
+{
+  ConThread obj=new ConThread();
+  try
+     {
+        System.out.println("HILO PADRE");
+        Thread.sleep(1000); 
+     }
+     catch(InterruptedException exc)
+     {
+     }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+/*programa
+de suma de numeros*/
+
+import java.io.*;
+public class programa1
+{
+   //constructor   public  private  protected
+
+   //constructor se llama igual que la clase
+   public programa1()
+   {
+      System.out.println("constructor");
+   }
+public static void main(String bolsa[])
+{
+   //crear una instancia 
+   programa1 objeto=new programa1()
+}
+}

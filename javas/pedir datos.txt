@@ -1,0 +1,35 @@
+/*programa
+de suma de numeros*/
+
+import java.io.*;
+public class programa1
+{
+   //constructor   public  private  protected
+   //declarar variables globales
+   public static BufferedReader entra=new BufferedReader(new InputStreamReader(System.in));
+   //constructor se llama igual que la clase
+   public programa1()
+   {
+      System.out.println("constructor");
+   }
+   public void suma() throws IOException
+   {
+      //declaracion de variable local de tipo entero de entrada por el usuario
+      
+      int x, y, suma=0;
+      //leer y convertir a entero las variables CAST
+      System.out.println("dame x");
+      x=Integer.parseInt(entra.readLine()); 
+      System.out.println("dame y");
+      y=Integer.parseInt(entra.readLine()); 
+      suma=x+y;
+      System.out.println("la suma de "+x+"+"+y+"es igual a: "+suma)
+   }
+public static void main(String bolsa[])throws Exception
+{
+   //crear una instancia 
+   programa1 objeto=new programa1();
+   //invocar funcion suma
+   objeto.suma();
+}
+}

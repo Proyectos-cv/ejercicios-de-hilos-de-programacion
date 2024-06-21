@@ -1,0 +1,29 @@
+/*programa
+de suma de numeros*/
+
+import java.io.*;
+public class programa1
+{
+   //constructor   public  private  protected
+   //declarar variables globales
+   
+   //constructor se llama igual que la clase
+   public programa1()
+   {
+      System.out.println("constructor");
+   }
+   public void suma(int x, int y)
+   {
+      //declaracion de variable local de tipo entero
+      int suma;
+      suma=x+y;
+      System.out.println("la suma de "+x+"+"+y+"es igual a: "+suma)
+   }
+public static void main(String bolsa[])
+{
+   //crear una instancia 
+   programa1 objeto=new programa1();
+   //invocar funcion suma
+   objeto.suma(3,5);
+}
+}

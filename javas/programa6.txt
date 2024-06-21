@@ -1,0 +1,32 @@
+/*programa
+de suma de numeros*/
+
+import java.io.*;
+public class programa5
+{
+
+   public static BufferedReader entra=new BufferedReader(new InputStreamReader(System.in));
+   public void cicloFor()throws IOException
+   {
+   //inicio de incremento
+      for(int i=1;i<=100;i++)
+      {
+         if(i%2==0)
+         {
+         System.out.print(i+" ");
+         }
+         else
+         {
+         System.out.ptintln("error");
+         }
+      }
+   }
+   
+
+public static void main(String bolsa[])throws Exception
+{
+Programa5 objeto=new Programa5();
+objeto.suma();
+}
+}
+

@@ -1,0 +1,35 @@
+/*programa
+de suma de numeros*/
+
+import java.io.*;
+public class programa5
+{
+   public void primos()throws IOException
+   {
+      int aleatorio=0, divi=0;
+      aleatorio=(int)(100+math.random()+1);
+      for(int i=1;i<=aleatorio;i++)
+      {
+         if(aleatorio%i==0)
+	 {
+	    divi++;
+	 }
+      }
+      if(divi==2)
+      {
+         System.out.println(aleatorio+"es primo")
+      }
+      else
+     {
+        System.out.println(aleatorio+"no es primo")
+     }
+   }
+   
+
+public static void main(String bolsa[])throws Exception
+{
+   Programa5 objeto=new Programa5();
+   objeto.suma();
+}
+}
+
